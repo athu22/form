@@ -27,14 +27,23 @@ body {
 
 /* A4 Paper Styling */
 .a4-page {
-  width: 210mm;
+  width: 100%;
+  max-width: 210mm;
   min-height: 297mm;
-  padding: 20mm;
-  margin: 10mm auto;
+  padding: 10mm;
+  margin: 10px auto;
   background-color: var(--paper-color);
   box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
   position: relative;
-  overflow: hidden;
+  overflow-x: auto;
+}
+
+@media (min-width: 768px) {
+  .a4-page {
+    width: 210mm;
+    padding: 20mm;
+    margin: 10mm auto;
+  }
 }
 
 /* Print Styles */

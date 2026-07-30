@@ -10,94 +10,191 @@ import Page6_Training_Warranty from './components/Page6_Training_Warranty';
 import Page7_Notice from './components/Page7_Notice';
 
 function App() {
+
   const formRef = useRef(null);
 
+  const saveAllInputs = () => {
+    const savedMap = JSON.parse(localStorage.getItem('form_field_autocomplete') || '{}');
+    let updated = false;
+    document.querySelectorAll('#pdf-content input').forEach((input) => {
+      if (input.type === 'checkbox' || input.type === 'radio' || input.type === 'button') return;
+      const fieldId = input.id;
+      if (!fieldId) return;
+      const val = input.value.trim();
+      if (val) {
+        const currentList = savedMap[fieldId] || [];
+        if (!currentList.includes(val)) {
+          savedMap[fieldId] = [...currentList, val].slice(-30);
+          updated = true;
+        }
+      }
+    });
+    if (updated) {
+      localStorage.setItem('form_field_autocomplete', JSON.stringify(savedMap));
+      window.dispatchEvent(new Event('update_datalists'));
+    }
+  };
+
   useEffect(() => {
-    let datalist = document.getElementById('dynamic-form-autocomplete');
-    if (!datalist) {
-      datalist = document.createElement('datalist');
-      datalist.id = 'dynamic-form-autocomplete';
-      document.body.appendChild(datalist);
+    // 1. Create the floating dropdown UI container
+    let dropdown = document.getElementById('custom-floating-dropdown');
+    if (!dropdown) {
+      dropdown = document.createElement('ul');
+      dropdown.id = 'custom-floating-dropdown';
+      Object.assign(dropdown.style, {
+        position: 'absolute',
+        display: 'none',
+        listStyle: 'none',
+        margin: 0,
+        padding: 0,
+        backgroundColor: '#fff',
+        border: '1px solid #ccc',
+        boxShadow: '0 4px 6px rgba(0,0,0,0.3)',
+        maxHeight: '200px',
+        overflowY: 'auto',
+        zIndex: 9999,
+        width: '200px',
+        borderRadius: '4px'
+      });
+      document.body.appendChild(dropdown);
     }
 
-    const assignIdsAndLists = () => {
+    // 2. Assign unique IDs and remove native autocomplete/datalist
+    const assignIds = () => {
       document.querySelectorAll('#pdf-content input').forEach((input, index) => {
-        // Skip hidden or unneeded types
         if (input.type === 'checkbox' || input.type === 'radio' || input.type === 'button') return;
         
-        if (!input.id) {
-          input.id = `auto-field-${index}`;
-        }
-        if (!input.hasAttribute('list')) {
-          input.setAttribute('list', 'dynamic-form-autocomplete');
-          input.setAttribute('autocomplete', 'off');
-        }
+        if (!input.id) input.id = `auto-field-${index}`;
+        input.setAttribute('autocomplete', 'off'); // Disable native autocomplete
+        input.removeAttribute('list'); // Remove native datalist
       });
+      
+      // Cleanup the old datalists container if it exists
+      const oldContainer = document.getElementById('datalists-container');
+      if (oldContainer) oldContainer.remove();
     };
     
-    // Ensure it runs after DOM is ready
-    setTimeout(assignIdsAndLists, 100);
+    setTimeout(assignIds, 100);
+
+    let activeInput = null;
+
+    // 3. Logic to show the dropdown
+    const showDropdown = (input) => {
+      const fieldId = input.id;
+      const savedMap = JSON.parse(localStorage.getItem('form_field_autocomplete') || '{}');
+      let options = savedMap[fieldId] || [];
+      
+      const val = input.value.trim().toLowerCase();
+      if (val) {
+        options = options.filter(o => o.toLowerCase().includes(val) && o !== input.value.trim());
+      }
+
+      if (options.length > 0) {
+        const rect = input.getBoundingClientRect();
+        Object.assign(dropdown.style, {
+          display: 'block',
+          top: `${rect.bottom + window.scrollY}px`,
+          left: `${rect.left + window.scrollX}px`,
+          width: `${Math.max(rect.width, 150)}px`
+        });
+        
+        dropdown.innerHTML = '';
+        options.forEach(opt => {
+          const li = document.createElement('li');
+          li.textContent = opt;
+          Object.assign(li.style, {
+            padding: '12px 10px',
+            cursor: 'pointer',
+            borderBottom: '1px solid #eee',
+            fontSize: '16px', // Mobile friendly font size
+            color: '#000',
+            backgroundColor: '#fff'
+          });
+          
+          li.onmouseover = () => { li.style.backgroundColor = '#f0f0f0'; };
+          li.onmouseout = () => { li.style.backgroundColor = '#fff'; };
+          
+          li.onmousedown = (e) => {
+            e.preventDefault(); // Prevent input from losing focus immediately
+            input.value = opt;
+            dropdown.style.display = 'none';
+          };
+          dropdown.appendChild(li);
+        });
+        activeInput = input;
+      } else {
+        dropdown.style.display = 'none';
+      }
+    };
 
     const handleFocus = (e) => {
-      if (e.target.tagName === 'INPUT' && e.target.hasAttribute('list')) {
-        const fieldId = e.target.id;
-        const savedMap = JSON.parse(localStorage.getItem('form_field_autocomplete') || '{}');
-        const options = savedMap[fieldId] || [];
-        
-        // Update datalist for this specific field
-        datalist.innerHTML = '';
-        options.forEach(opt => {
-          const optionEl = document.createElement('option');
-          optionEl.value = opt;
-          datalist.appendChild(optionEl);
-        });
+      if (e.target.tagName === 'INPUT' && e.target.closest('#pdf-content')) {
+        if (e.target.type === 'checkbox' || e.target.type === 'radio') return;
+        showDropdown(e.target);
+      }
+    };
+
+    const handleInput = (e) => {
+      if (e.target.tagName === 'INPUT' && activeInput === e.target) {
+        showDropdown(e.target);
       }
     };
 
     const handleBlur = (e) => {
-      if (e.target.tagName === 'INPUT' && e.target.hasAttribute('list')) {
-        const fieldId = e.target.id;
-        const val = e.target.value.trim();
-        if (val) {
-          const savedMap = JSON.parse(localStorage.getItem('form_field_autocomplete') || '{}');
-          const currentList = savedMap[fieldId] || [];
-          if (!currentList.includes(val)) {
-            const newList = [...currentList, val].slice(-30);
-            savedMap[fieldId] = newList;
-            localStorage.setItem('form_field_autocomplete', JSON.stringify(savedMap));
-          }
-        }
+      if (e.target.tagName === 'INPUT' && e.target.closest('#pdf-content')) {
+        dropdown.style.display = 'none';
+        activeInput = null;
+      }
+    };
+
+    // Prevent clicks inside the dropdown from closing it before mousedown processes
+    const handleDocClick = (e) => {
+      if (activeInput && e.target !== activeInput && !dropdown.contains(e.target)) {
+        dropdown.style.display = 'none';
+        activeInput = null;
       }
     };
 
     document.addEventListener('focus', handleFocus, true);
+    document.addEventListener('input', handleInput, true);
     document.addEventListener('blur', handleBlur, true);
+    document.addEventListener('mousedown', handleDocClick);
 
+    // If print updates localstorage, we don't need to do anything immediately
+    // because the dropdown regenerates on focus anyway.
+    
     return () => {
       document.removeEventListener('focus', handleFocus, true);
+      document.removeEventListener('input', handleInput, true);
       document.removeEventListener('blur', handleBlur, true);
+      document.removeEventListener('mousedown', handleDocClick);
+      if (dropdown && dropdown.parentNode) {
+        dropdown.parentNode.removeChild(dropdown);
+      }
     };
   }, []);
 
   const handlePrint = () => {
+    saveAllInputs();
     window.print();
   };
 
   const handleDownload = () => {
+    saveAllInputs();
     const element = formRef.current;
-    
+
     // Create a clone to fix inputs for html2pdf
     // Note: html2pdf/html2canvas can struggle with input values. 
     // Best practice for perfect A4 is actually printing to PDF via the browser,
     // but we will provide this download function as well.
     const opt = {
-      margin:       0,
-      filename:     'government_form.pdf',
-      image:        { type: 'jpeg', quality: 0.98 },
-      html2canvas:  { scale: 2, useCORS: true },
-      jsPDF:        { unit: 'mm', format: 'a4', orientation: 'portrait' }
+      margin: 0,
+      filename: 'government_form.pdf',
+      image: { type: 'jpeg', quality: 0.98 },
+      html2canvas: { scale: 2, useCORS: true },
+      jsPDF: { unit: 'mm', format: 'a4', orientation: 'portrait' }
     };
-    
+
     html2pdf().set(opt).from(element).save();
   };
 
@@ -117,14 +214,14 @@ function App() {
 
   return (
     <div className="app-container bg-gray-100 min-h-screen">
-      <ActionButtons 
+      <ActionButtons
         onPrint={handlePrint}
         onDownload={handleDownload}
         onClear={handleClear}
         onSave={handleSave}
         onPreview={handlePreview}
       />
-      
+
       <div id="pdf-content" ref={formRef}>
         <Page1_Checklist />
         <Page2_Application />
