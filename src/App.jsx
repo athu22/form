@@ -183,19 +183,32 @@ function App() {
     saveAllInputs();
     const element = formRef.current;
 
-    // Create a clone to fix inputs for html2pdf
-    // Note: html2pdf/html2canvas can struggle with input values. 
-    // Best practice for perfect A4 is actually printing to PDF via the browser,
-    // but we will provide this download function as well.
+    // Fix for html2canvas: Set actual HTML attributes for inputs so it captures the typed text
+    element.querySelectorAll('input').forEach(input => {
+      if (input.type === 'checkbox' || input.type === 'radio') {
+        if (input.checked) input.setAttribute('checked', 'checked');
+        else input.removeAttribute('checked');
+      } else {
+        input.setAttribute('value', input.value);
+      }
+    });
+
+    // Add a class that forces the elements into a 210mm print layout
+    element.classList.add('pdf-export-mode');
+
     const opt = {
       margin: 0,
       filename: 'government_form.pdf',
-      image: { type: 'jpeg', quality: 0.98 },
-      html2canvas: { scale: 2, useCORS: true },
-      jsPDF: { unit: 'mm', format: 'a4', orientation: 'portrait' }
+      image: { type: 'jpeg', quality: 1 },
+      html2canvas: { scale: 2, useCORS: true, windowWidth: 1024 },
+      jsPDF: { unit: 'mm', format: 'a4', orientation: 'portrait' },
+      pagebreak: { mode: 'css' }
     };
 
-    html2pdf().set(opt).from(element).save();
+    html2pdf().set(opt).from(element).save().then(() => {
+      // Clean up the class after the PDF is generated
+      element.classList.remove('pdf-export-mode');
+    });
   };
 
   const handleClear = () => {

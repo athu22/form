@@ -86,6 +86,19 @@ body {
   }
 }
 
+/* PDF Export Mode (simulates print mode for html2canvas) */
+.pdf-export-mode .a4-page {
+  margin: 0 !important;
+  box-shadow: none !important;
+  width: 210mm !important;
+  max-width: none !important;
+  min-height: 297mm !important;
+  padding: 15mm !important;
+  overflow: hidden !important;
+  page-break-after: always;
+  page-break-inside: avoid;
+}
+
 /* Base styles for header */
 .header-flex {
   display: flex;
