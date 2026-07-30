@@ -199,8 +199,15 @@ function App() {
   };
 
   const handleClear = () => {
-    if (window.confirm("Are you sure you want to clear the entire form?")) {
-      window.location.reload();
+    if (window.confirm("Are you sure you want to clear the form? (Saved dropdowns will not be deleted)")) {
+      document.querySelectorAll('#pdf-content input').forEach(input => {
+        if (input.type === 'checkbox' || input.type === 'radio') {
+          input.checked = false;
+        } else if (input.type !== 'button') {
+          input.value = '';
+        }
+      });
+      window.scrollTo(0, 0);
     }
   };
 
