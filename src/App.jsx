@@ -1,4 +1,4 @@
-import React, { useRef } from 'react';
+import React, { useRef, useEffect, useState } from 'react';
 import html2pdf from 'html2pdf.js';
 import ActionButtons from './components/ActionButtons';
 import Page1_Checklist from './components/Page1_Checklist';
@@ -11,6 +11,73 @@ import Page7_Notice from './components/Page7_Notice';
 
 function App() {
   const formRef = useRef(null);
+
+  useEffect(() => {
+    let datalist = document.getElementById('dynamic-form-autocomplete');
+    if (!datalist) {
+      datalist = document.createElement('datalist');
+      datalist.id = 'dynamic-form-autocomplete';
+      document.body.appendChild(datalist);
+    }
+
+    const assignIdsAndLists = () => {
+      document.querySelectorAll('#pdf-content input').forEach((input, index) => {
+        // Skip hidden or unneeded types
+        if (input.type === 'checkbox' || input.type === 'radio' || input.type === 'button') return;
+        
+        if (!input.id) {
+          input.id = `auto-field-${index}`;
+        }
+        if (!input.hasAttribute('list')) {
+          input.setAttribute('list', 'dynamic-form-autocomplete');
+          input.setAttribute('autocomplete', 'off');
+        }
+      });
+    };
+    
+    // Ensure it runs after DOM is ready
+    setTimeout(assignIdsAndLists, 100);
+
+    const handleFocus = (e) => {
+      if (e.target.tagName === 'INPUT' && e.target.hasAttribute('list')) {
+        const fieldId = e.target.id;
+        const savedMap = JSON.parse(localStorage.getItem('form_field_autocomplete') || '{}');
+        const options = savedMap[fieldId] || [];
+        
+        // Update datalist for this specific field
+        datalist.innerHTML = '';
+        options.forEach(opt => {
+          const optionEl = document.createElement('option');
+          optionEl.value = opt;
+          datalist.appendChild(optionEl);
+        });
+      }
+    };
+
+    const handleBlur = (e) => {
+      if (e.target.tagName === 'INPUT' && e.target.hasAttribute('list')) {
+        const fieldId = e.target.id;
+        const val = e.target.value.trim();
+        if (val) {
+          const savedMap = JSON.parse(localStorage.getItem('form_field_autocomplete') || '{}');
+          const currentList = savedMap[fieldId] || [];
+          if (!currentList.includes(val)) {
+            const newList = [...currentList, val].slice(-30);
+            savedMap[fieldId] = newList;
+            localStorage.setItem('form_field_autocomplete', JSON.stringify(savedMap));
+          }
+        }
+      }
+    };
+
+    document.addEventListener('focus', handleFocus, true);
+    document.addEventListener('blur', handleBlur, true);
+
+    return () => {
+      document.removeEventListener('focus', handleFocus, true);
+      document.removeEventListener('blur', handleBlur, true);
+    };
+  }, []);
 
   const handlePrint = () => {
     window.print();
