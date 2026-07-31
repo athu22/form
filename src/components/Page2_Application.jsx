@@ -29,33 +29,33 @@ const Page2_Application = () => {
           <tr>
             <td width="5%">1</td>
             <td width="45%">ರೈತನ ಹೆಸರು</td>
-            <td width="50%"><input type="text" style={{ width: '100%' }} /></td>
+            <td width="50%"><input type="text" data-sync="applicantName" style={{ width: '100%' }} /></td>
           </tr>
           <tr>
             <td>2</td>
             <td>ತಂದೆಯ / ಗಂಡನ ಹೆಸರು</td>
-            <td><input type="text" style={{ width: '100%' }} /></td>
+            <td><input type="text" data-sync="fatherName" style={{ width: '100%' }} /></td>
           </tr>
           <tr>
             <td>3</td>
             <td>ಗ್ರಾಮ ಮತ್ತು ಹೋಬಳಿ</td>
             <td>
-              ಗ್ರಾಮ: <input type="text" style={{ width: '100px', marginRight: '10px' }} />
-              ಹೋಬಳಿ: <input type="text" style={{ width: '100px' }} />
+              ಗ್ರಾಮ: <input type="text" data-sync="village" style={{ width: '100px', marginRight: '10px' }} />
+              ಹೋಬಳಿ: <input type="text" data-sync="hobli" style={{ width: '100px' }} />
             </td>
           </tr>
           <tr>
             <td>4</td>
             <td>ತಾಲ್ಲೂಕು/ ಜಿಲ್ಲೆ</td>
             <td>
-              ತಾಲ್ಲೂಕು: <input type="text" style={{ width: '100px', marginRight: '10px' }} />
-              ಜಿಲ್ಲೆ: <input type="text" style={{ width: '100px' }} />
+              ತಾಲ್ಲೂಕು: <input type="text" data-sync="taluka" style={{ width: '100px', marginRight: '10px' }} />
+              ಜಿಲ್ಲೆ: <input type="text" data-sync="district" style={{ width: '100px' }} />
             </td>
           </tr>
           <tr>
             <td>5</td>
             <td>ಮೊಬೈಲ ನಂಬರ</td>
-            <td><input type="number" style={{ width: '100%' }} /></td>
+            <td><input type="number" data-sync="mobile" style={{ width: '100%' }} /></td>
           </tr>
           <tr>
             <td>6</td>
@@ -68,7 +68,7 @@ const Page2_Application = () => {
           <tr>
             <td>7</td>
             <td>ಸರ್ವೆ ನಂ ಹಾಗೂ ಗ್ರಾಮ (ಅರ್ಜಿಯಲ್ಲಿ ನಮೂದಿಸಿದಂತೆ)</td>
-            <td><input type="text" style={{ width: '100%' }} /></td>
+            <td><input type="text" data-sync="surveyNo" style={{ width: '100%' }} /></td>
           </tr>
           <tr>
             <td>8</td>

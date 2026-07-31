@@ -11,8 +11,8 @@ const Page3_NOC = () => {
       </div>
 
       <div style={{ textIndent: '40px', marginTop: '30px' }}>
-        <input type="text" style={{ width: '150px' }} /> ತಾಲ್ಲೂಕಿನ <input type="text" style={{ width: '150px' }} /> ಗ್ರಾಮದ ನಾನು
-        <input type="text" style={{ width: '250px' }} /> ಸರ್ವೆನಂ: <input type="text" style={{ width: '100px' }} /> ರಲ್ಲಿ
+        <input type="text" data-sync="taluka" style={{ width: '150px' }} /> ತಾಲ್ಲೂಕಿನ <input type="text" data-sync="village" style={{ width: '150px' }} /> ಗ್ರಾಮದ ನಾನು
+        <input type="text" data-sync="applicantName" style={{ width: '250px' }} /> ಸರ್ವೆನಂ: <input type="text" data-sync="surveyNo" style={{ width: '100px' }} /> ರಲ್ಲಿ
         <input type="text" style={{ width: '100px' }} /> ಕ್ಷೇತ್ರದ ಕೃಷಿ ಜಮೀನು ಹೊಂದಿದ್ದು, ಈ ಮೂಲಕ ಪ್ರಮಾಣೀಕರಿಸುವದೆನೆಂದರೆ, 2023-24
         ನೇ ಸಾಲಿನಲ್ಲಿಮೆ:[ತಯಾರಕರು <input type="text" style={{ width: '300px' }} />
         <input type="text" style={{ width: '150px' }} /> : <input type="text" style={{ width: '150px' }} /> )ಇವರಿಂದ

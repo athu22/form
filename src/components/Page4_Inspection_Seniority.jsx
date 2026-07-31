@@ -13,9 +13,9 @@ const Page4_Inspection_Seniority = () => {
       </div>
 
       <div style={{ textIndent: '40px', marginTop: '30px' }}>
-        ದಿನಾಂಕ: <input type="date" style={{ width: '150px' }} /> ರಂದು ಶ್ರೀ/ಶ್ರೀಮತಿ <input type="text" style={{ width: '250px' }} /> 
-        ಗ್ರಾಮ : <input type="text" style={{ width: '120px' }} /> <br/>
-        ರಿ.ಸ.ನಂ: <input type="text" style={{ width: '150px' }} /> ಕ್ಷೇತ್ರ (ಹೇ.) <input type="text" style={{ width: '120px' }} /> ಗೆ ಭೇಟಿ ನೀಡಿದ್ದು ಸದರಿಯವರು ಕ್ಷೇತ್ರದಲ್ಲಿ
+        ದಿನಾಂಕ: <input type="date" style={{ width: '150px' }} /> ರಂದು ಶ್ರೀ/ಶ್ರೀಮತಿ <input type="text" data-sync="applicantName" style={{ width: '250px' }} /> 
+        ಗ್ರಾಮ : <input type="text" data-sync="village" style={{ width: '120px' }} /> <br/>
+        ರಿ.ಸ.ನಂ: <input type="text" data-sync="surveyNo" style={{ width: '150px' }} /> ಕ್ಷೇತ್ರ (ಹೇ.) <input type="text" style={{ width: '120px' }} /> ಗೆ ಭೇಟಿ ನೀಡಿದ್ದು ಸದರಿಯವರು ಕ್ಷೇತ್ರದಲ್ಲಿ
         ಹನಿ ನೀರಾವರಿಯನ್ನು ಅಳವಡಿಸಿದ್ದು, ಪೂರೈಕೆ ಪತ್ರದಲ್ಲಿ (ಡಿಲೇವರಿ ಚಲನ್) ತಿಳಿಸಿರುವಂತೆ ಎಲ್ಲ ಸಲಕರಣೆಗಳನ್ನು
         ಒದಗಿಸಿರುತ್ತಾರೆ. ಹಾಗೂ ಎಲ್ಲ ಸಲಕರಣೆಗಳು ತೃಪ್ತಿಕರವಾಗಿ ಕಾರ್ಯ ನಿರ್ವಹಿಸುತ್ತಿವೆ. ಸದರಿ ಹನಿ ನೀರಾವರಿ ಘಟಕವು
         <input type="text" style={{ width: '80px' }} /> ಮೀಟರ್‌ಗಳಲ್ಲಿ ಅಳವಡಿಸಿದ್ದು ಈ ಹೊಲದ ರೇಖಾಂಶ ಹಾಗೂ ಅಕ್ಷಾಂಶ ಈ ಕೆಳಗಿನಂತಿರುತ್ತದೆ
@@ -61,7 +61,7 @@ const Page4_Inspection_Seniority = () => {
 
       <div style={{ textIndent: '40px', marginTop: '30px' }}>
         ಈ ಮೂಲಕ ದೃಢೀಕರಿಸುವುದೇನೆಂದರೆ 2023-24 ನೇ ಸಾಲಿನ ಹನಿ ನೀರಾವರಿಯೋಜನೆಯಡಿಯಲ್ಲಿ
-        ಶ್ರೀ/ಶ್ರೀಮತಿ <input type="text" style={{ width: '300px' }} /> ಗ್ರಾಮ <input type="text" style={{ width: '150px' }} /> 
+        ಶ್ರೀ/ಶ್ರೀಮತಿ <input type="text" data-sync="applicantName" style={{ width: '300px' }} /> ಗ್ರಾಮ <input type="text" data-sync="village" style={{ width: '150px' }} /> 
         ಇವರ ಜೇಷ್ಠತಾ ಸಂಖ್ಯೆ <input type="text" style={{ width: '150px' }} /> ಯಾಗಿದ್ದು ಸದರಿಯವರು ಜೇಷ್ಠತೆಯಲ್ಲಿಿದ್ದು ಇವರಿಗೆ ಹನಿ
         ನೀರಾವರಿಯ ಸಹಾಯಧನ ನೀಡಲುಯಾವುದೇ ಅಭ್ಯಂತರವಿರುವುದಿಲ್ಲ.
       </div>

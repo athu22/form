@@ -1,4 +1,6 @@
 import React, { useRef, useEffect, useState } from 'react';
+import { collection, addDoc, deleteDoc, doc, onSnapshot } from 'firebase/firestore';
+import { db } from './firebase';
 import html2pdf from 'html2pdf.js';
 import ActionButtons from './components/ActionButtons';
 import Page1_Checklist from './components/Page1_Checklist';
@@ -12,6 +14,41 @@ import Page7_Notice from './components/Page7_Notice';
 function App() {
 
   const formRef = useRef(null);
+  const [submissions, setSubmissions] = useState([]);
+
+  useEffect(() => {
+    // Listen to real-time updates from Firestore
+    const unsubscribe = onSnapshot(collection(db, "applications"), (snapshot) => {
+      const docs = [];
+      snapshot.forEach((doc) => {
+        docs.push({ id: doc.id, ...doc.data() });
+      });
+      // Sort by date descending
+      docs.sort((a, b) => new Date(b.date) - new Date(a.date));
+      setSubmissions(docs);
+    });
+
+    return () => unsubscribe();
+  }, []);
+
+  useEffect(() => {
+    const handleGlobalInput = (e) => {
+      if (e.target.tagName === 'INPUT') {
+        const syncKey = e.target.getAttribute('data-sync');
+        if (syncKey) {
+          const val = e.target.value;
+          document.querySelectorAll(`input[data-sync="${syncKey}"]`).forEach(input => {
+            if (input !== e.target && input.value !== val) {
+              input.value = val;
+            }
+          });
+        }
+      }
+    };
+    
+    document.addEventListener('input', handleGlobalInput);
+    return () => document.removeEventListener('input', handleGlobalInput);
+  }, []);
 
   const saveAllInputs = () => {
     const savedMap = JSON.parse(localStorage.getItem('form_field_autocomplete') || '{}');
@@ -224,8 +261,82 @@ function App() {
     }
   };
 
-  const handleSave = () => {
-    alert("Draft saved locally (Mock function).");
+  const handleSave = async () => {
+    const formData = {};
+    document.querySelectorAll('#pdf-content input').forEach((input, index) => {
+      const key = input.id || `auto-field-${index}`;
+      if (input.type === 'checkbox' || input.type === 'radio') {
+        formData[key] = input.checked;
+      } else {
+        formData[key] = input.value;
+      }
+    });
+    
+    let identifier = "Unknown";
+    const inputs = Array.from(document.querySelectorAll('#pdf-content input[type="text"]'));
+    if (inputs.length > 0 && inputs[0].value) {
+      identifier = inputs[0].value;
+    }
+
+    const newSubmission = {
+      date: new Date().toLocaleString(),
+      name: identifier,
+      data: formData
+    };
+
+    try {
+      await addDoc(collection(db, "applications"), newSubmission);
+      alert("Form saved to Firebase successfully!");
+    } catch (e) {
+      console.error("Error adding document: ", e);
+      alert("Error saving to Firebase. Check console and configuration.");
+    }
+  };
+
+  const handleLoad = (submission) => {
+    if (window.confirm("Loading this submission will overwrite current form data. Continue?")) {
+      document.querySelectorAll('#pdf-content input').forEach((input, index) => {
+        const key = input.id || `auto-field-${index}`;
+        if (submission.data.hasOwnProperty(key)) {
+          if (input.type === 'checkbox' || input.type === 'radio') {
+            input.checked = submission.data[key];
+          } else {
+            input.value = submission.data[key];
+          }
+        }
+      });
+      window.scrollTo(0, 0);
+      alert("Data loaded successfully!");
+    }
+  };
+
+  const handlePrintSubmission = (submission) => {
+    // Load the data silently
+    document.querySelectorAll('#pdf-content input').forEach((input, index) => {
+      const key = input.id || `auto-field-${index}`;
+      if (submission.data.hasOwnProperty(key)) {
+        if (input.type === 'checkbox' || input.type === 'radio') {
+          input.checked = submission.data[key];
+        } else {
+          input.value = submission.data[key];
+        }
+      }
+    });
+    // Print immediately
+    setTimeout(() => {
+      window.print();
+    }, 500);
+  };
+
+  const handleDelete = async (id) => {
+    if (window.confirm("Are you sure you want to delete this record from Firebase?")) {
+      try {
+        await deleteDoc(doc(db, "applications", id));
+      } catch (e) {
+        console.error("Error deleting document: ", e);
+        alert("Error deleting from Firebase.");
+      }
+    }
   };
 
   const handlePreview = () => {
@@ -250,6 +361,64 @@ function App() {
         <Page5_Maintenance_OfficeOrder />
         <Page6_Training_Warranty />
         <Page7_Notice />
+      </div>
+
+      {/* Submissions Database Table */}
+      <div className="db-container">
+        <h2 className="db-header">
+          <span>Saved Applications</span>
+          <span className="db-badge">Live Database</span>
+        </h2>
+        {submissions.length > 0 ? (
+          <div className="db-table-wrapper">
+            <table className="db-table">
+              <thead>
+                <tr>
+                  <th>ID</th>
+                  <th>Date</th>
+                  <th>Applicant Info</th>
+                  <th style={{textAlign: 'center'}}>Actions</th>
+                </tr>
+              </thead>
+              <tbody>
+                {submissions.map((sub, index) => (
+                  <tr key={sub.id}>
+                    <td>#{submissions.length - index}</td>
+                    <td>{sub.date}</td>
+                    <td style={{fontWeight: 'bold'}}>{sub.name}</td>
+                    <td className="actions">
+                      <button 
+                        className="btn btn-load"
+                        onClick={() => handleLoad(sub)}
+                        title="Load into form"
+                      >
+                        Load
+                      </button>
+                      <button 
+                        className="btn btn-print"
+                        onClick={() => handlePrintSubmission(sub)}
+                        title="Load and Print immediately"
+                      >
+                        Print
+                      </button>
+                      <button 
+                        className="btn btn-delete"
+                        onClick={() => handleDelete(sub.id)}
+                        title="Delete from database"
+                      >
+                        Delete
+                      </button>
+                    </td>
+                  </tr>
+                ))}
+              </tbody>
+            </table>
+          </div>
+        ) : (
+          <div className="db-empty">
+            <p>No saved applications found in the database.</p>
+          </div>
+        )}
       </div>
     </div>
   );

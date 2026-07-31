@@ -201,3 +201,108 @@ th, td {
 .photo-box input[type="file"] {
   display: none;
 }
+
+/* Database Table Custom Styles */
+.db-container {
+  max-width: 210mm;
+  margin: 40px auto;
+  padding: 30px;
+  background-color: #ffffff;
+  border-radius: 12px;
+  box-shadow: 0 10px 25px rgba(0, 0, 0, 0.05);
+  border: 1px solid #e5e7eb;
+}
+
+.db-header {
+  font-size: 24px;
+  font-weight: bold;
+  color: #1f2937;
+  margin-bottom: 20px;
+  padding-bottom: 10px;
+  border-bottom: 2px solid #f3f4f6;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.db-badge {
+  font-size: 12px;
+  background-color: #d1fae5;
+  color: #065f46;
+  padding: 4px 10px;
+  border-radius: 9999px;
+  font-weight: 600;
+}
+
+.db-table-wrapper {
+  overflow: hidden;
+  border-radius: 8px;
+  border: 1px solid #e5e7eb;
+}
+
+.db-table {
+  width: 100%;
+  border-collapse: collapse;
+  background-color: white;
+  margin-bottom: 0;
+}
+
+.db-table th {
+  background-color: #f9fafb;
+  color: #4b5563;
+  font-weight: 600;
+  padding: 12px 15px;
+  text-align: left;
+  border-bottom: 1px solid #e5e7eb;
+  border-right: none;
+  border-left: none;
+  border-top: none;
+}
+
+.db-table td {
+  padding: 15px;
+  border-bottom: 1px solid #f3f4f6;
+  color: #374151;
+  border-right: none;
+  border-left: none;
+  border-top: none;
+}
+
+.db-table tr:hover {
+  background-color: #f0fdf4;
+}
+
+.db-table .actions {
+  display: flex;
+  gap: 8px;
+  justify-content: center;
+}
+
+.btn {
+  padding: 6px 12px;
+  border-radius: 6px;
+  font-size: 13px;
+  font-weight: 500;
+  cursor: pointer;
+  border: none;
+  color: white;
+  transition: all 0.2s ease;
+}
+
+.btn-load { background-color: #4f46e5; }
+.btn-load:hover { background-color: #4338ca; }
+
+.btn-print { background-color: #10b981; }
+.btn-print:hover { background-color: #059669; }
+
+.btn-delete { background-color: #f43f5e; }
+.btn-delete:hover { background-color: #e11d48; }
+
+.db-empty {
+  text-align: center;
+  padding: 40px;
+  color: #6b7280;
+  background-color: #f9fafb;
+  border-radius: 8px;
+  border: 1px dashed #d1d5db;
+}
