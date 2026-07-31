@@ -17,7 +17,7 @@ const Page6_Training_Warranty = () => {
         <input type="text" data-sync="village" style={{ width: '150px' }} /> ಗ್ರಾಮ <input type="text" data-sync="taluka" style={{ width: '150px' }} /> ತಾಲ್ಲೂಕು ಬೆಳಗಾವಿ ಜಿಲ್ಲೆ ಸರ್ವೆ ನಂ:
         <input type="text" data-sync="surveyNo" style={{ width: '150px' }} /> , ರವರು ಬರೆದುಕೊಡುವ ದೃಢೀಕರಣ ಪತ್ರವೆನೆಂದರೆ
         <input type="text" data-sync="companyName" style={{ width: '250px' }} /> ಈ ಕಂಪನಿಯವರು ನನ್ನ ತೋಟದಲ್ಲಿ
-        <input type="text" style={{ width: '150px' }} /> ಬೆಳೆಗೆ <input type="text" style={{ width: '100px' }} /> ಹೆಕ್ಟರ್ ವಿಸ್ತೀರ್ಣದಲ್ಲಿ ಹನಿ ನೀರಾವರಿ
+        <input type="text" data-sync="cropName" style={{ width: '150px' }} /> ಬೆಳೆಗೆ <input type="text" data-sync="landAreaHectares" style={{ width: '100px' }} /> ಹೆಕ್ಟರ್ ವಿಸ್ತೀರ್ಣದಲ್ಲಿ ಹನಿ ನೀರಾವರಿ
         ಅಳವಡಿಸಿದ್ದು ಕಾಮಗಾರಿ ಸರಿಯಾಗಿದ್ದು ಈ ಹನಿ ನೀರಾವರಿ ಪದ್ಧತಿ ಘಟಕವು ತೃಪ್ತೀಕರವಾಗಿ
         ಕಾರ್ಯನಿರ್ವಹಿಸುತ್ತಿದೆಯೆಂದು ಈ ಮೂಲಕ ದೃಢೀಕರಿಸುತ್ತೇವೆ. ಹನಿ ನೀರಾವರಿ ಪದ್ಧತಿಯ ಪರಿಕರಗಳನ್ನು
         ನಿರ್ವಹಿಸುವ ಬಗ್ಗೆ ತರಬೇತಿ ಕೈ ಪಿಡಿಯನ್ನು ಕಂಪನಿಯವರಿಂದ ಪಡೆದಿರುತ್ತೇನೆ.
@@ -47,8 +47,8 @@ const Page6_Training_Warranty = () => {
       <div style={{ textIndent: '40px', marginTop: '30px' }}>
         ನಾನು ಶ್ರೀಮತಿ/ಶ್ರೀ. <input type="text" data-sync="applicantName" style={{ width: '250px' }} /> /ಕೋಂ <input type="text" data-sync="fatherName" style={{ width: '100px' }} />
         <input type="text" data-sync="village" style={{ width: '150px' }} /> ಗ್ರಾಮ <input type="text" data-sync="taluka" style={{ width: '150px' }} /> ತಾಲ್ಲೂಕು ಬೆಳಗಾವಿ ಜಿಲ್ಲೆ ಸರ್ವೆ
-        ನಂಬರ್ <input type="text" data-sync="surveyNo" style={{ width: '150px' }} /> ರಲ್ಲಿ <input type="text" style={{ width: '150px' }} /> ಬೆಳೆಗೆ
-        <input type="text" style={{ width: '100px' }} /> ಹೆಕ್ಟರ್ ವಿಸ್ತೀರ್ಣದಲ್ಲಿ ಹನಿ ನೀರಾವರಿ ಅಳವಡಿಸಲು ಮೇಲ್ಕಾಣಿಸಿದ ಬೆಳೆಗೆ ಅನುಗುಣವಾಗಿ
+        ನಂಬರ್ <input type="text" data-sync="surveyNo" style={{ width: '150px' }} /> ರಲ್ಲಿ <input type="text" data-sync="cropName" style={{ width: '150px' }} /> ಬೆಳೆಗೆ
+        <input type="text" data-sync="landAreaHectares" style={{ width: '100px' }} /> ಹೆಕ್ಟರ್ ವಿಸ್ತೀರ್ಣದಲ್ಲಿ ಹನಿ ನೀರಾವರಿ ಅಳವಡಿಸಲು ಮೇಲ್ಕಾಣಿಸಿದ ಬೆಳೆಗೆ ಅನುಗುಣವಾಗಿ
         ಒಳ್ಳೆಯ ಹಾಗೂ ಮಿತವ್ಯಯದದೃಷ್ಟಿಯಿಂದ ನಕ್ಷೆ ತಯಾರಿಸಿ, ಬಿ.ಪಿ.ಎಸ್/ಐ.ಎಸ್.ಐಗುಣಮಟ್ಟದ ಉಪಕರಣಗಳನ್ನು
         ಬಳಸಿಕೊಂಡು ಹನಿ ನೀರಾವರಿ ಪದ್ಧತಿ ಅಳವಡಿಸಿರುತ್ತದೆ. ಹನಿ ನೀರಾವರಿ ಪದ್ಧತಿ ಅಳವಡಿಸಿದ ದಿನಾಂಕದಿಂದ
         ಐದು ವರ್ಷಗಳ ವಾರೆಂಟಿ ಅವಧಿಯಲ್ಲಿ ರಿಪೇರಿ ಮತ್ತು ನಿರ್ವಹಣೆ ಜವಾಬ್ದಾರಿಯನ್ನು ಹೊಂದಿರುತ್ತೇವೆ, ಮತ್ತು

@@ -73,7 +73,7 @@ const Page2_Application = () => {
           <tr>
             <td>8</td>
             <td>ರೈತನ ವರ್ಗ (ಅತಿ ಸಣ್ಣ/ಸಣ್ಣ/ದೊಡ್ಡ) (ಅರ್ಜಿಯಲ್ಲಿ ನಮೂದಿಸಿದಂತೆ)</td>
-            <td><input type="text" style={{ width: '100%' }} /></td>
+            <td><input type="text" data-sync="category" style={{ width: '100%' }} /></td>
           </tr>
           <tr>
             <td>9</td>
@@ -115,7 +115,7 @@ const Page2_Application = () => {
             <td>
               <input type="text" data-sync="accountNo" style={{ width: '100%', marginBottom: '5px' }} placeholder="Account No" /><br/>
               <input type="text" data-sync="ifscCode" style={{ width: '100%', marginBottom: '5px' }} placeholder="IFSC Code" /><br/>
-              <input type="text" style={{ width: '100%' }} placeholder="MICR No" />
+              <input type="text" data-sync="micr" style={{ width: '100%' }} placeholder="MICR No" />
             </td>
           </tr>
         </tbody>
@@ -160,11 +160,11 @@ const Page2_Application = () => {
           </tr>
           <tr>
             <td><strong>U.T.R. No</strong></td>
-            <td><input type="text" style={{ width: '100%' }} /></td>
+            <td><input type="text" data-sync="utrNo" style={{ width: '100%' }} /></td>
           </tr>
           <tr>
             <td><strong>NEFT/RTGS DATE</strong></td>
-            <td><input type="date" style={{ width: '100%' }} /></td>
+            <td><input type="date" data-sync="rtgsDate" style={{ width: '100%' }} /></td>
           </tr>
         </tbody>
       </table>
