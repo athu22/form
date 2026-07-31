@@ -15,6 +15,7 @@ function App() {
 
   const formRef = useRef(null);
   const [submissions, setSubmissions] = useState([]);
+  const [showTable, setShowTable] = useState(false);
 
   useEffect(() => {
     // Listen to real-time updates from Firestore
@@ -305,6 +306,7 @@ function App() {
           }
         }
       });
+      setShowTable(false);
       window.scrollTo(0, 0);
       alert("Data loaded successfully!");
     }
@@ -323,6 +325,7 @@ function App() {
       }
     });
     // Print immediately
+    setShowTable(false);
     setTimeout(() => {
       window.print();
     }, 500);
@@ -340,7 +343,13 @@ function App() {
   };
 
   const handlePreview = () => {
-    alert("To preview the form, please use the Print button to open the browser's PDF Print Preview.");
+    setShowTable(prev => !prev);
+    // Scroll to the bottom if opening the table
+    if (!showTable) {
+      setTimeout(() => {
+        window.scrollTo({ top: document.body.scrollHeight, behavior: 'smooth' });
+      }, 100);
+    }
   };
 
   return (
@@ -353,7 +362,7 @@ function App() {
         onPreview={handlePreview}
       />
 
-      <div id="pdf-content" ref={formRef}>
+      <div id="pdf-content" ref={formRef} style={{ display: showTable ? 'none' : 'block' }}>
         <Page1_Checklist />
         <Page2_Application />
         <Page3_NOC />
@@ -364,62 +373,79 @@ function App() {
       </div>
 
       {/* Submissions Database Table */}
-      <div className="db-container">
-        <h2 className="db-header">
-          <span>Saved Applications</span>
-          <span className="db-badge">Live Database</span>
-        </h2>
-        {submissions.length > 0 ? (
-          <div className="db-table-wrapper">
-            <table className="db-table">
-              <thead>
-                <tr>
-                  <th>ID</th>
-                  <th>Date</th>
-                  <th>Applicant Info</th>
-                  <th style={{textAlign: 'center'}}>Actions</th>
-                </tr>
-              </thead>
-              <tbody>
-                {submissions.map((sub, index) => (
-                  <tr key={sub.id}>
-                    <td>#{submissions.length - index}</td>
-                    <td>{sub.date}</td>
-                    <td style={{fontWeight: 'bold'}}>{sub.name}</td>
-                    <td className="actions">
-                      <button 
-                        className="btn btn-load"
-                        onClick={() => handleLoad(sub)}
-                        title="Load into form"
-                      >
-                        Load
-                      </button>
-                      <button 
-                        className="btn btn-print"
-                        onClick={() => handlePrintSubmission(sub)}
-                        title="Load and Print immediately"
-                      >
-                        Print
-                      </button>
-                      <button 
-                        className="btn btn-delete"
-                        onClick={() => handleDelete(sub.id)}
-                        title="Delete from database"
-                      >
-                        Delete
-                      </button>
-                    </td>
+      {showTable && (
+        <div className="db-container">
+          <h2 className="db-header">
+            <div style={{ display: 'flex', alignItems: 'center', gap: '15px' }}>
+              <button 
+                onClick={() => { setShowTable(false); window.scrollTo(0,0); }}
+                style={{ 
+                  background: '#f3f4f6', border: '1px solid #e5e7eb', borderRadius: '6px', 
+                  padding: '6px 12px', cursor: 'pointer', display: 'flex', 
+                  alignItems: 'center', color: '#4b5563', fontWeight: '600', fontSize: '14px',
+                  transition: 'all 0.2s'
+                }}
+                onMouseOver={(e) => e.target.style.background = '#e5e7eb'}
+                onMouseOut={(e) => e.target.style.background = '#f3f4f6'}
+              >
+                ← Back to Form
+              </button>
+              <span>Saved Applications</span>
+            </div>
+            <span className="db-badge">Live Database</span>
+          </h2>
+          {submissions.length > 0 ? (
+            <div className="db-table-wrapper">
+              <table className="db-table">
+                <thead>
+                  <tr>
+                    <th>ID</th>
+                    <th>Date</th>
+                    <th>Applicant Info</th>
+                    <th style={{textAlign: 'center'}}>Actions</th>
                   </tr>
-                ))}
-              </tbody>
-            </table>
-          </div>
-        ) : (
-          <div className="db-empty">
-            <p>No saved applications found in the database.</p>
-          </div>
-        )}
-      </div>
+                </thead>
+                <tbody>
+                  {submissions.map((sub, index) => (
+                    <tr key={sub.id}>
+                      <td>#{submissions.length - index}</td>
+                      <td>{sub.date}</td>
+                      <td style={{fontWeight: 'bold'}}>{sub.name}</td>
+                      <td className="actions">
+                        <button 
+                          className="btn btn-load"
+                          onClick={() => handleLoad(sub)}
+                          title="Edit in form"
+                        >
+                          Edit
+                        </button>
+                        <button 
+                          className="btn btn-print"
+                          onClick={() => handlePrintSubmission(sub)}
+                          title="Load and Print immediately"
+                        >
+                          Print
+                        </button>
+                        <button 
+                          className="btn btn-delete"
+                          onClick={() => handleDelete(sub.id)}
+                          title="Delete from database"
+                        >
+                          Delete
+                        </button>
+                      </td>
+                    </tr>
+                  ))}
+                </tbody>
+              </table>
+            </div>
+          ) : (
+            <div className="db-empty">
+              <p>No saved applications found in the database.</p>
+            </div>
+          )}
+        </div>
+      )}
     </div>
   );
 }

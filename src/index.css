@@ -204,7 +204,8 @@ th, td {
 
 /* Database Table Custom Styles */
 .db-container {
-  max-width: 210mm;
+  width: 95%;
+  max-width: 1400px;
   margin: 40px auto;
   padding: 30px;
   background-color: #ffffff;
