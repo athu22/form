@@ -252,17 +252,40 @@ function App() {
   };
 
   const handleClear = () => {
-    if (window.confirm("Are you sure you want to clear the form? (Saved dropdowns will not be deleted)")) {
-      setEditingId(null);
-      document.querySelectorAll('#pdf-content input').forEach(input => {
-        if (input.type === 'checkbox' || input.type === 'radio') {
-          input.checked = false;
-        } else if (input.type !== 'button') {
-          input.value = '';
-        }
-      });
-      window.scrollTo(0, 0);
-    }
+    toast(
+      (t) => (
+        <div style={{ display: 'flex', flexDirection: 'column', gap: '10px' }}>
+          <span style={{ fontWeight: 'bold' }}>Are you sure you want to clear the form?</span>
+          <div style={{ display: 'flex', gap: '10px', justifyContent: 'flex-end' }}>
+            <button
+              style={{ padding: '6px 12px', background: '#dc3545', color: '#fff', border: 'none', borderRadius: '4px', cursor: 'pointer', fontWeight: 'bold' }}
+              onClick={() => {
+                toast.dismiss(t.id);
+                setEditingId(null);
+                document.querySelectorAll('#pdf-content input').forEach(input => {
+                  if (input.type === 'checkbox' || input.type === 'radio') {
+                    input.checked = false;
+                  } else if (input.type !== 'button') {
+                    input.value = '';
+                  }
+                });
+                window.scrollTo(0, 0);
+                toast.success("Form cleared successfully!");
+              }}
+            >
+              Clear
+            </button>
+            <button
+              style={{ padding: '6px 12px', background: '#e5e7eb', color: '#000', border: 'none', borderRadius: '4px', cursor: 'pointer', fontWeight: 'bold' }}
+              onClick={() => toast.dismiss(t.id)}
+            >
+              Cancel
+            </button>
+          </div>
+        </div>
+      ),
+      { duration: Infinity }
+    );
   };
 
   const handleSave = async () => {
@@ -304,22 +327,20 @@ function App() {
   };
 
   const handleLoad = (submission) => {
-    if (window.confirm("Editing this submission will overwrite current form data. Continue?")) {
-      setEditingId(submission.id);
-      document.querySelectorAll('#pdf-content input').forEach((input, index) => {
-        const key = input.id || `auto-field-${index}`;
-        if (submission.data.hasOwnProperty(key)) {
-          if (input.type === 'checkbox' || input.type === 'radio') {
-            input.checked = submission.data[key];
-          } else {
-            input.value = submission.data[key];
-          }
+    setEditingId(submission.id);
+    document.querySelectorAll('#pdf-content input').forEach((input, index) => {
+      const key = input.id || `auto-field-${index}`;
+      if (submission.data.hasOwnProperty(key)) {
+        if (input.type === 'checkbox' || input.type === 'radio') {
+          input.checked = submission.data[key];
+        } else {
+          input.value = submission.data[key];
         }
-      });
-      setShowTable(false);
-      window.scrollTo(0, 0);
-      toast.success("Data loaded successfully!");
-    }
+      }
+    });
+    setShowTable(false);
+    window.scrollTo(0, 0);
+    toast.success("Data loaded successfully!");
   };
 
   const handlePrintSubmission = (submission) => {
@@ -341,16 +362,38 @@ function App() {
     }, 500);
   };
 
-  const handleDelete = async (id) => {
-    if (window.confirm("Are you sure you want to delete this record from Firebase?")) {
-      try {
-        await deleteDoc(doc(db, "applications", id));
-        toast.success("Record deleted successfully!");
-      } catch (e) {
-        console.error("Error deleting document: ", e);
-        toast.error("Error deleting from Firebase.");
-      }
-    }
+  const handleDelete = (id) => {
+    toast(
+      (t) => (
+        <div style={{ display: 'flex', flexDirection: 'column', gap: '10px' }}>
+          <span style={{ fontWeight: 'bold' }}>Are you sure you want to delete this record?</span>
+          <div style={{ display: 'flex', gap: '10px', justifyContent: 'flex-end' }}>
+            <button
+              style={{ padding: '6px 12px', background: '#dc3545', color: '#fff', border: 'none', borderRadius: '4px', cursor: 'pointer', fontWeight: 'bold' }}
+              onClick={async () => {
+                toast.dismiss(t.id);
+                try {
+                  await deleteDoc(doc(db, "applications", id));
+                  toast.success("Record deleted successfully!");
+                } catch (e) {
+                  console.error("Error deleting document: ", e);
+                  toast.error("Error deleting from Firebase.");
+                }
+              }}
+            >
+              Delete
+            </button>
+            <button
+              style={{ padding: '6px 12px', background: '#e5e7eb', color: '#000', border: 'none', borderRadius: '4px', cursor: 'pointer', fontWeight: 'bold' }}
+              onClick={() => toast.dismiss(t.id)}
+            >
+              Cancel
+            </button>
+          </div>
+        </div>
+      ),
+      { duration: Infinity }
+    );
   };
 
   const handlePreview = () => {
