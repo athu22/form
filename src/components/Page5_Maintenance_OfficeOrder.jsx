@@ -13,9 +13,9 @@ const Page5_Maintenance_OfficeOrder = () => {
       </div>
 
       <div style={{ textIndent: '40px', marginTop: '30px' }}>
-        <input type="text" style={{ width: '120px' }} /> ತಾಲ್ಲೂಕಿನ <input type="text" style={{ width: '120px' }} /> ರೈತ ಸಂಪರ್ಕಕೇಂದ್ರದ ವ್ಯಾಪ್ತಿಯಲ್ಲಿ ಬರುವ
-        <input type="text" style={{ width: '150px' }} /> ಗ್ರಾಮದ ನಿವಾಸಿಯಾದ <input type="text" style={{ width: '200px' }} /> .ಇವರು
-        <input type="text" style={{ width: '120px' }} /> ಗ್ರಾಮದ <input type="text" style={{ width: '120px' }} /> ಸರ್ವೆ ನಂ. ನಲ್ಲಿ ಒಟ್ಟು <input type="text" style={{ width: '80px' }} /> ಹೆಕ್ಟೇರ ಕ್ಷೇತ್ರವನ್ನು ಹೊಂದಿದ್ದು, ಈ ಪೈಕಿ
+        <input type="text" data-sync="taluka" style={{ width: '120px' }} /> ತಾಲ್ಲೂಕಿನ <input type="text" style={{ width: '120px' }} /> ರೈತ ಸಂಪರ್ಕಕೇಂದ್ರದ ವ್ಯಾಪ್ತಿಯಲ್ಲಿ ಬರುವ
+        <input type="text" data-sync="village" style={{ width: '150px' }} /> ಗ್ರಾಮದ ನಿವಾಸಿಯಾದ <input type="text" data-sync="applicantName" style={{ width: '200px' }} /> .ಇವರು
+        <input type="text" data-sync="village" style={{ width: '120px' }} /> ಗ್ರಾಮದ <input type="text" data-sync="surveyNo" style={{ width: '120px' }} /> ಸರ್ವೆ ನಂ. ನಲ್ಲಿ ಒಟ್ಟು <input type="text" style={{ width: '80px' }} /> ಹೆಕ್ಟೇರ ಕ್ಷೇತ್ರವನ್ನು ಹೊಂದಿದ್ದು, ಈ ಪೈಕಿ
         <input type="text" style={{ width: '80px' }} /> ಹೇಕ್ಟರ್ ಕ್ಷೇತ್ರದಲ್ಲಿ ಭಾವಿ/ಕೊಳವೆ ಬಾವಿಯಿಂದ ನೀರುಣಿಸಿ ಬೆಳೆಸಿದ <input type="text" style={{ width: '150px' }} /> ಬೆಳೆಯಲ್ಲಿ <input type="text" style={{ width: '200px' }} />
         ಪ್ರಕಾರದ ಹನಿ ನೀರಾವರಿ ಘಟಕವನ್ನು ಅಳವಡಿಸಿಕೊಂಡಿರುತ್ತಾರೆ. ಈ
         ಘಟಕಕ್ಕೆ ದಿನಾಂಕ : <input type="date" style={{ width: '150px' }} /> ರಂದು ಭೇಟಿ ನೀಡಿ ಪರಿಶೀಲಿಸಲಾಗಿ <input type="text" style={{ width: '150px' }} /> ಬೆಳೆಯು
@@ -54,7 +54,7 @@ const Page5_Maintenance_OfficeOrder = () => {
       </div>
 
       <div style={{ textIndent: '40px', marginTop: '30px' }}>
-        <input type="text" style={{ width: '120px' }} /> .ಗ್ರಾಮದ <input type="text" style={{ width: '150px' }} /> ಸ.ನಂ.ದಲ್ಲಿ
+        <input type="text" data-sync="village" style={{ width: '120px' }} /> .ಗ್ರಾಮದ <input type="text" data-sync="surveyNo" style={{ width: '150px' }} /> ಸ.ನಂ.ದಲ್ಲಿ
         <input type="text" style={{ width: '80px' }} /> ಹೆಕ್ಟರ್..ಕ್ಷೇತ್ರದಲ್ಲಿ ಕೃಷಿ ಅಧಿಕಾರಿ, ರೈತ ಸಂಪರ್ಕಕೇಂದ್ರ..ಇವರು ನೀಡಿದ ಮೇಲ್ಕಂಡ ವರದಿಯನ್ನಾಧರಿಸಿದ ದಿನಾಂಕ
         <input type="date" style={{ width: '150px' }} /> ರಂದು ಸದರಿಕ್ಷೇತ್ರಕ್ಕೆ ಭೇಟಿ ನೀಡಿ ಪರಿಶೀಲಿಸಲಾಗಿ ಸದರಿ ಘಟಕವು ತೃಪ್ತಿಕರವಾಗಿ ಕಾರ್ಯನಿರ್ವಹಿಸುತ್ತಿರುವುದು
         ರುಜುವಾತ ಪ್ರಯುಕ್ತಘಟಕ ಪೂರೈಸಿದ ಪೂರೈಕೆದಾರರಿಗೆ 2023-24 ನೇ ಸಾಲಿನ ಹನಿ ನೀರಾವರಿ ಯೋಜನೆಅಡಿಯಲ್ಲಿ ಈ ಕೆಳಗೆ

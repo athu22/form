@@ -1,7 +1,8 @@
 import React, { useRef, useEffect, useState } from 'react';
-import { collection, addDoc, deleteDoc, doc, onSnapshot } from 'firebase/firestore';
+import { collection, addDoc, deleteDoc, doc, onSnapshot, updateDoc } from 'firebase/firestore';
 import { db } from './firebase';
 import html2pdf from 'html2pdf.js';
+import toast, { Toaster } from 'react-hot-toast';
 import ActionButtons from './components/ActionButtons';
 import Page1_Checklist from './components/Page1_Checklist';
 import Page2_Application from './components/Page2_Application';
@@ -16,6 +17,7 @@ function App() {
   const formRef = useRef(null);
   const [submissions, setSubmissions] = useState([]);
   const [showTable, setShowTable] = useState(false);
+  const [editingId, setEditingId] = useState(null);
 
   useEffect(() => {
     // Listen to real-time updates from Firestore
@@ -251,6 +253,7 @@ function App() {
 
   const handleClear = () => {
     if (window.confirm("Are you sure you want to clear the form? (Saved dropdowns will not be deleted)")) {
+      setEditingId(null);
       document.querySelectorAll('#pdf-content input').forEach(input => {
         if (input.type === 'checkbox' || input.type === 'radio') {
           input.checked = false;
@@ -286,16 +289,23 @@ function App() {
     };
 
     try {
-      await addDoc(collection(db, "applications"), newSubmission);
-      alert("Form saved to Firebase successfully!");
+      if (editingId) {
+        await updateDoc(doc(db, "applications", editingId), newSubmission);
+        toast.success("Form updated successfully!");
+      } else {
+        const docRef = await addDoc(collection(db, "applications"), newSubmission);
+        setEditingId(docRef.id);
+        toast.success("Form saved to Firebase successfully!");
+      }
     } catch (e) {
-      console.error("Error adding document: ", e);
-      alert("Error saving to Firebase. Check console and configuration.");
+      console.error("Error saving document: ", e);
+      toast.error("Error saving to Firebase. Check console and configuration.");
     }
   };
 
   const handleLoad = (submission) => {
-    if (window.confirm("Loading this submission will overwrite current form data. Continue?")) {
+    if (window.confirm("Editing this submission will overwrite current form data. Continue?")) {
+      setEditingId(submission.id);
       document.querySelectorAll('#pdf-content input').forEach((input, index) => {
         const key = input.id || `auto-field-${index}`;
         if (submission.data.hasOwnProperty(key)) {
@@ -308,7 +318,7 @@ function App() {
       });
       setShowTable(false);
       window.scrollTo(0, 0);
-      alert("Data loaded successfully!");
+      toast.success("Data loaded successfully!");
     }
   };
 
@@ -335,9 +345,10 @@ function App() {
     if (window.confirm("Are you sure you want to delete this record from Firebase?")) {
       try {
         await deleteDoc(doc(db, "applications", id));
+        toast.success("Record deleted successfully!");
       } catch (e) {
         console.error("Error deleting document: ", e);
-        alert("Error deleting from Firebase.");
+        toast.error("Error deleting from Firebase.");
       }
     }
   };
@@ -354,12 +365,14 @@ function App() {
 
   return (
     <div className="app-container bg-gray-100 min-h-screen">
+      <Toaster position="top-right" />
       <ActionButtons
         onPrint={handlePrint}
         onDownload={handleDownload}
         onClear={handleClear}
         onSave={handleSave}
         onPreview={handlePreview}
+        isEditing={!!editingId}
       />
 
       <div id="pdf-content" ref={formRef} style={{ display: showTable ? 'none' : 'block' }}>

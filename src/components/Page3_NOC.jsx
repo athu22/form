@@ -14,7 +14,7 @@ const Page3_NOC = () => {
         <input type="text" data-sync="taluka" style={{ width: '150px' }} /> ತಾಲ್ಲೂಕಿನ <input type="text" data-sync="village" style={{ width: '150px' }} /> ಗ್ರಾಮದ ನಾನು
         <input type="text" data-sync="applicantName" style={{ width: '250px' }} /> ಸರ್ವೆನಂ: <input type="text" data-sync="surveyNo" style={{ width: '100px' }} /> ರಲ್ಲಿ
         <input type="text" style={{ width: '100px' }} /> ಕ್ಷೇತ್ರದ ಕೃಷಿ ಜಮೀನು ಹೊಂದಿದ್ದು, ಈ ಮೂಲಕ ಪ್ರಮಾಣೀಕರಿಸುವದೆನೆಂದರೆ, 2023-24
-        ನೇ ಸಾಲಿನಲ್ಲಿಮೆ:[ತಯಾರಕರು <input type="text" style={{ width: '300px' }} />
+        ನೇ ಸಾಲಿನಲ್ಲಿಮೆ:[ತಯಾರಕರು <input type="text" data-sync="companyName" style={{ width: '300px' }} />
         <input type="text" style={{ width: '150px' }} /> : <input type="text" style={{ width: '150px' }} /> )ಇವರಿಂದ
         <input type="text" style={{ width: '120px' }} /> ಉಪಕರಣ/ತುಂತುರು ನೀರಾವರಿ
         ಘಟಕ/ಹನಿ ನೀರಾವರಿ ಘಟಕವನ್ನು ಅಳವಡಿಸಿಕೊಂಡಿದ್ದು, ನನಗೆ ದೊರಕಬೇಕಾದ ಎಲ್ಲಾ ಸಾಮಗ್ರಿಗಳು (ನಿಗದಿತ
@@ -26,7 +26,7 @@ const Page3_NOC = () => {
         ಸದರಿ <input type="text" style={{ width: '150px' }} /> ಉಪಕರಣ/ತುಂತುರು ನೀರಾವರಿಘಟಕ/ ಹನಿ ನೀರಾವರಿ ಘಟಕ ಅಳವಡಿಸಿದಕ್ಕೆ
         ಸಂಬಂಧಿಸಿದಂತೆ ಪೂರ್ಣ ಪ್ರಮಾಣದಲ್ಲಿ ಹಣ ಭರಿಸಲು ಸಾಧ್ಯವಾಗದ ಕಾರಣ ಕೇವಲ ರೈತರ ಪಾಲಿನ ಬಾಬತ್ತು
         ರೂ <input type="text" style={{ width: '200px' }} /> ಭರಿಸಿ. ಘಟಕಕ್ಕೆ ನೀಡಬೇಕಾದ ಸರಕಾರದ ಸಹಾಯಧನದ
-        ಮೊತ್ತವನ್ನು ಮೆ|| <input type="text" style={{ width: '300px' }} /> ಇವರಿಗೆ
+        ಮೊತ್ತವನ್ನು ಮೆ|| <input type="text" data-sync="companyName" style={{ width: '300px' }} /> ಇವರಿಗೆ
         ನೇರವಾಗಿ ಸಂದಾಯ ಮಾಡಲು ನನಗೆ ಒಪ್ಪಿಗೆ ಇದ್ದು, ಯಾವುದೇ ಅಭ್ಯಂತರ ಇಲ್ಲವೆಂದು ಈ ಮೂಲಕ
         ಪ್ರಮಾಣೀಕರಿಸುತ್ತೇನೆ.
       </div>

@@ -88,7 +88,7 @@ const Page2_Application = () => {
           <tr>
             <td>11</td>
             <td>ಸರಬರಾಜು ಸಂಸ್ಥೆ</td>
-            <td><input type="text" style={{ width: '100%' }} /></td>
+            <td><input type="text" data-sync="companyName" style={{ width: '100%' }} /></td>
           </tr>
           <tr>
             <td>12</td>
@@ -103,7 +103,7 @@ const Page2_Application = () => {
           <tr>
             <td>14</td>
             <td>ಬ್ಯಾಂಕ ಹೆಸರು ಮತ್ತು ಶಾಖೆ (ಅರ್ಜಿಯಲ್ಲಿ ನಮೂದಿಸಿದಂತೆ)</td>
-            <td><input type="text" style={{ width: '100%' }} /></td>
+            <td><input type="text" data-sync="bankName" style={{ width: '100%' }} /></td>
           </tr>
           <tr>
             <td>15</td>
@@ -113,8 +113,8 @@ const Page2_Application = () => {
               MICR NO
             </td>
             <td>
-              <input type="text" style={{ width: '100%', marginBottom: '5px' }} placeholder="Account No" /><br/>
-              <input type="text" style={{ width: '100%', marginBottom: '5px' }} placeholder="IFSC Code" /><br/>
+              <input type="text" data-sync="accountNo" style={{ width: '100%', marginBottom: '5px' }} placeholder="Account No" /><br/>
+              <input type="text" data-sync="ifscCode" style={{ width: '100%', marginBottom: '5px' }} placeholder="IFSC Code" /><br/>
               <input type="text" style={{ width: '100%' }} placeholder="MICR No" />
             </td>
           </tr>
@@ -152,7 +152,7 @@ const Page2_Application = () => {
           </tr>
           <tr>
             <td><strong>Aadhar Card No</strong></td>
-            <td><input type="text" style={{ width: '100%' }} /></td>
+            <td><input type="text" data-sync="aadhar" style={{ width: '100%' }} /></td>
           </tr>
           <tr>
             <td><strong>Farmer Share Amount Rs</strong></td>
